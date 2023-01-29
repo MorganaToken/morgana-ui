@@ -85,7 +85,7 @@
     "http2-proxy": "^5.0.53",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "node-fetch": "^3.2.10",
+    "node-fetch": "^3.3.0",
     "prettier": "^2.7.1",
     "progress-promise": "^0.0.6",
     "tar-fs": "^2.1.1",
