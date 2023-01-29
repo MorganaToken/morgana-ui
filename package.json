@@ -83,7 +83,7 @@
     "eslint-plugin-react": "^7.30.1",
     "gunzip-maybe": "^1.4.2",
     "http2-proxy": "^5.0.53",
-    "husky": "^8.0.1",
+    "husky": "^8.0.3",
     "lint-staged": "^13.0.3",
     "node-fetch": "^3.2.10",
     "prettier": "^2.7.1",
