@@ -37,7 +37,7 @@
         <frontend.maven.plugin.nodeVersion>v18.7.0</frontend.maven.plugin.nodeVersion>
 
         <keycloak.version>19.0.1</keycloak.version>
-        <kotlin.version>1.7.10</kotlin.version>
+        <kotlin.version>1.8.10</kotlin.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
     </properties>
 
