@@ -26,19 +26,12 @@
     <description>Keycloak Administration UI</description>
 
     <properties>
-        <jboss.repo.nexusUrl>https://s01.oss.sonatype.org/</jboss.repo.nexusUrl>
-        <jboss.releases.repo.id>jboss-releases-repository</jboss.releases.repo.id>
-        <jboss.releases.repo.url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</jboss.releases.repo.url>
-        <jboss.snapshots.repo.id>jboss-snapshots-repository</jboss.snapshots.repo.id>
-        <jboss.snapshots.repo.url>https://s01.oss.sonatype.org/content/repositories/snapshots/</jboss.snapshots.repo.url>
-
-        <nexus.staging.plugin.version>1.6.13</nexus.staging.plugin.version>
         <frontend.maven.plugin.version>1.12.1</frontend.maven.plugin.version>
-        <frontend.maven.plugin.nodeVersion>v18.7.0</frontend.maven.plugin.nodeVersion>
+        <frontend.maven.plugin.nodeVersion>v18.9.0</frontend.maven.plugin.nodeVersion>
 
-        <keycloak.version>19.0.1</keycloak.version>
-        <kotlin.version>1.7.10</kotlin.version>
-        <mapstruct.version>1.5.2.Final</mapstruct.version>
+        <keycloak.version>20.0.3</keycloak.version>
+
+        <admin-ui.path>../apps/admin-ui</admin-ui.path>
     </properties>
 
     <licenses>
@@ -65,16 +58,14 @@
     </developers>
 
     <distributionManagement>
-        <repository>
-            <id>${jboss.releases.repo.id}</id>
-            <name>JBoss Releases Repository</name>
-            <url>${jboss.releases.repo.url}</url>
-        </repository>
         <snapshotRepository>
-            <id>${jboss.snapshots.repo.id}</id>
-            <name>JBoss Snapshots Repository</name>
-            <url>${jboss.snapshots.repo.url}</url>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
 
     <dependencies>
@@ -94,35 +85,84 @@
             <version>${keycloak.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
-            <version>${kotlin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${mapstruct.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.eclipse.microprofile.openapi</groupId>
             <artifactId>microprofile-openapi-api</artifactId>
-            <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-test</artifactId>
-            <version>${kotlin.version}</version>
-            <scope>test</scope>
+            <version>3.1</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.14.2</version>
+            <version>7.7.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.5.0</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <configuration>
+                            <retryFailedDeploymentCount>10</retryFailedDeploymentCount>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>nexus</id>
+            <activation>
+                <property>
+                    <name>!skipNexus</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.13</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>gpg</id>
             <build>
@@ -151,6 +191,7 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>install-tarball</id>
             <activation>
@@ -180,7 +221,7 @@
                         </executions>
                         <configuration>
                             <nodeVersion>${frontend.maven.plugin.nodeVersion}</nodeVersion>
-                            <workingDirectory>../</workingDirectory>
+                            <workingDirectory>${admin-ui.path}</workingDirectory>
                             <installDirectory>.</installDirectory>
                         </configuration>
                     </plugin>
@@ -192,77 +233,9 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-maven-plugin</artifactId>
-                <version>${kotlin.version}</version>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test-compile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>kapt</id>
-                        <goals>
-                            <goal>kapt</goal>
-                        </goals>
-                        <configuration>
-                            <sourceDirs>
-                                <sourceDir>src/main/java</sourceDir>
-                            </sourceDirs>
-                            <annotationProcessorPaths>
-                                <annotationProcessorPath>
-                                    <groupId>org.mapstruct</groupId>
-                                    <artifactId>mapstruct-processor</artifactId>
-                                    <version>${mapstruct.version}</version>
-                                </annotationProcessorPath>
-                            </annotationProcessorPaths>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <jvmTarget>1.8</jvmTarget>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <executions>
-                    <!-- Replacing default-compile as it is treated specially by maven -->
-                    <execution>
-                        <id>default-compile</id>
-                        <phase>none</phase>
-                    </execution>
-                    <!-- Replacing default-testCompile as it is treated specially by maven -->
-                    <execution>
-                        <id>default-testCompile</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>java-compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>java-test-compile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <version>3.10.1</version>
                 <configuration>
                     <source>8</source>
                     <target>8</target>
@@ -271,7 +244,7 @@
             <plugin>
                 <artifactId>smallrye-open-api-maven-plugin</artifactId>
                 <groupId>io.smallrye</groupId>
-                <version>2.1.22</version>
+                <version>3.2.0</version>
                 <configuration>
                     <scanPackages>org.keycloak.admin.ui.rest</scanPackages>
                 </configuration>
@@ -282,16 +255,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>${nexus.staging.plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>${jboss.releases.repo.id}</serverId>
-                    <nexusUrl>${jboss.repo.nexusUrl}</nexusUrl>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -321,7 +284,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run build</arguments>
+                            <arguments>run build --workspace=admin-ui</arguments>
                         </configuration>
                     </execution>
                 </executions>
@@ -344,7 +307,7 @@
                             <outputDirectory>target/classes/theme/keycloak.v2/admin/resources</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>../dist</directory>
+                                    <directory>${admin-ui.path}/dist</directory>
                                 </resource>
                             </resources>
                         </configuration>
@@ -382,11 +345,11 @@
                     <regex>false</regex>
                     <replacements>
                         <replacement>
-                            <token>src="</token>
+                            <token>src="./</token>
                             <value>src="${resourceUrl}/</value>
                         </replacement>
                         <replacement>
-                            <token>href="</token>
+                            <token>href="./</token>
                             <value>href="${resourceUrl}/</value>
                         </replacement>
                         <replacement>
@@ -402,12 +365,24 @@
       "resourceUrl": "${resourceUrl}",
       "masterRealm": "${masterRealm}",
       "resourceVersion": "${resourceVersion}",
-      "commitHash": "${git.commit.id}",
       "isRunningAsTheme": true
     }
   </script>
 </body>
 ]]>
+</value>
+                        </replacement>
+                        <replacement>
+                            <token><![CDATA[</head>]]></token>
+                            <value xml:space="preserve">
+<![CDATA[
+    <#if properties.styles?has_content>
+      <#list properties.styles?split(' ') as style>
+      <link href="${resourceUrl}/${style}" rel="stylesheet"/>
+      </#list>
+    </#if>
+  </head>
+]]>	
 </value>
                         </replacement>
                     </replacements>

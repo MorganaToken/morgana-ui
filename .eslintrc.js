@@ -1,8 +1,17 @@
 /** @type {import("eslint").Linter.Config } */
 module.exports = {
   root: true,
-  ignorePatterns: ["node_modules", "dist", "keycloak-theme", "server"],
+  ignorePatterns: [
+    "node_modules",
+    "dist",
+    "keycloak-theme",
+    "server",
+    // Keycloak JS follows a completely different and outdated style, so we'll exclude it for now.
+    // TODO: Eventually align the code-style for Keycloak JS.
+    "libs/keycloak-js",
+  ],
   parserOptions: {
+    tsconfigRootDir: __dirname,
     project: "./tsconfig.eslint.json",
     extraFileExtensions: [".mjs"],
   },
@@ -12,6 +21,8 @@ module.exports = {
   plugins: ["lodash"],
   extends: [
     "eslint:recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:@typescript-eslint/base",
@@ -21,6 +32,10 @@ module.exports = {
   settings: {
     react: {
       version: "detect",
+    },
+    "import/resolver": {
+      typescript: true,
+      node: true,
     },
   },
   rules: {
@@ -38,6 +53,9 @@ module.exports = {
     "react/prop-types": "off",
     // Prevent fragments from being added that have only a single child.
     "react/jsx-no-useless-fragment": "error",
+    // Ban nesting components, as this will cause unintended re-mounting of components.
+    // TODO: All issues should be fixed and this rule should be set to "error".
+    "react/no-unstable-nested-components": ["warn", { allowAsProps: true }],
     "prefer-arrow-callback": "error",
     "prettier/prettier": [
       "error",
@@ -67,11 +85,16 @@ module.exports = {
       },
     },
     {
-      files: ["cypress/**/*"],
-      extends: ["plugin:cypress/recommended"],
+      files: ["**/cypress/**/*"],
+      extends: ["plugin:cypress/recommended", "plugin:mocha/recommended"],
       // TODO: Set these rules to "error" when issues have been resolved.
       rules: {
         "cypress/no-unnecessary-waiting": "warn",
+        "mocha/max-top-level-suites": "off",
+        "mocha/no-exclusive-tests": "error",
+        "mocha/no-identical-title": "off",
+        "mocha/no-mocha-arrows": "off",
+        "mocha/no-setup-in-describe": "off",
       },
     },
   ],
