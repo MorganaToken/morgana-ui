@@ -4,10 +4,11 @@
   <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&pause=1000&color=FA9933&center=true&width=700&lines=An+Open+Source+IAM+solution+for+modern+Applications+and+Services" alt="Typing SVG" /></a>
 </div>
 
-
 # Morgana UI
 
 This repository contains the UIs and related libraries of the morgana project.
+
+![morgana-flow](https://raw.githubusercontent.com/MorganaToken/morgana-core/main/themes/src/main/resources/theme/guinsoolab/welcome/resources/morgana-flow.png)
 
 ## Repository structure
 
@@ -22,6 +23,21 @@ This repository contains the UIs and related libraries of the morgana project.
     │   └── keycloak-masthead          # Keycloak Masthead library for an easy way to bring applications into the GuinsooLab ecosystem, allow users to access
     │                                  # and manage security for those applications and manage authorization of resources
     ├── ...
+
+## Help and Documentation
+
+* [Quickstart](https://ciusji.gitbook.io/morgana/guides/getting-started)
+* [Server Installation](https://ciusji.gitbook.io/morgana/guides/server-installation-and-configuration)
+* [Securing Apps](https://ciusji.gitbook.io/morgana/guides/securing-applications-and-services)
+* [Server Administration](https://ciusji.gitbook.io/morgana/guides/server-administration)
+* [Server Developer](https://ciusji.gitbook.io/morgana/guides/server-developer)
+* [Authorization Services](https://ciusji.gitbook.io/morgana/guides/authorization-services)
+* [Upgrading](https://ciusji.gitbook.io/morgana/guides/upgrading)
+* [REST APIs](https://ciusji.gitbook.io/morgana/apis/rest-apis)
+
+## Reporting Security Vulnerabilities
+
+If you've found a security vulnerability, please look at the [instructions on how to properly report it](https://github.com/MorganaToken/morgana-core/security/policy)
 
 ## Data processing
 
