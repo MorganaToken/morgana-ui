@@ -8,7 +8,7 @@
 
 This repository contains the UIs and related libraries of the morgana project.
 
-![morgana-flow](https://raw.githubusercontent.com/MorganaToken/morgana-core/main/themes/src/main/resources/theme/guinsoolab/welcome/resources/morgana-flow.png)
+![morgana-flow](https://raw.githubusercontent.com/MorganaToken/morgana-ui/main/apps/admin-ui/public/morgana-flow.png)
 
 ## Repository structure
 
