@@ -6,5 +6,5 @@ export const keycloak = new Keycloak({
   realm: environment.loginRealm,
   clientId: environment.isRunningAsTheme
     ? "account-console"
-    : "security-admin-console-v2",
+    : "security-admin-console",
 });
