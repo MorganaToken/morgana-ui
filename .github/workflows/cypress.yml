@@ -46,7 +46,7 @@ jobs:
 
       - name: Build Admin UI
         working-directory: admin-ui-repo
-        run: mvn clean install --batch-mode --file keycloak-theme/pom.xml
+        run: mvn clean install --batch-mode --file morgana-theme/pom.xml
 
       - name: Build Keycloak Server
         working-directory: keycloak-repo

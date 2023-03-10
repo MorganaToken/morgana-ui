@@ -4,7 +4,7 @@ module.exports = {
   ignorePatterns: [
     "node_modules",
     "dist",
-    "keycloak-theme",
+    "morgana-theme",
     "server",
     // Keycloak JS follows a completely different and outdated style, so we'll exclude it for now.
     // TODO: Eventually align the code-style for Keycloak JS.
