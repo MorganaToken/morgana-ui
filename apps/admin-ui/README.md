@@ -1,6 +1,6 @@
-# Keycloak Admin UI
+# Morgana Admin UI
 
-This project is the next generation of the Keycloak Administration UI. It is written with React and [PatternFly 4](https://www.patternfly.org/v4/) and uses [Vite](https://vitejs.dev/guide/) and [Cypress](https://docs.cypress.io/guides/overview/why-cypress).
+This project is the next generation of the Morgana Administration UI. It is written with React and [PatternFly 4](https://www.patternfly.org/v4/) and uses [Vite](https://vitejs.dev/guide/) and [Cypress](https://docs.cypress.io/guides/overview/why-cypress).
 
 ## Development
 
@@ -16,7 +16,7 @@ node --version
 
 In order to run the Keycloak server you will also have to install the Java Development Kit (JDK). We recommend that you use the same version of the JDK as [required by the Keycloak server](https://github.com/keycloak/keycloak/blob/main/docs/building.md#building-from-source).
 
-### Running the Keycloak server
+### Running the Morgana server
 
 See the instructions in the [Keycloak server app](../keycloak-server/README.md).
 

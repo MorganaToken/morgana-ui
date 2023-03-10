@@ -1,5 +1,5 @@
 {
-  "listExplain": "Identity providers are social networks or identity brokers that allow users to authenticate to Keycloak.",
+  "listExplain": "Identity providers are social networks or identity brokers that allow users to authenticate to Morgana.",
   "searchForProvider": "Search for provider",
   "providerDetails": "Provider details",
   "addProvider": "Add provider",

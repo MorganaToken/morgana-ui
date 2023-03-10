@@ -28,7 +28,7 @@ input[type="checkbox"] {
 
 .keycloak__form_actions {
   position: fixed;
-  bottom: 0px;
+  bottom: 0;
   background-color: var(--pf-c-page__main-section--m-light--BackgroundColor);
   padding-top: var(--pf-global--spacer--md);
   padding-bottom: var(--pf-global--spacer--sm);
@@ -52,7 +52,7 @@ td.pf-c-table__check > input[type="checkbox"] {
 }
 
 .pf-c-pagination.pf-m-bottom.pf-m-compact {
-  padding: 0px;
+  padding: 0;
 }
 
 .kc-time-select-dropdown {

@@ -65,7 +65,7 @@ export async function initAdminClient() {
     realm: environment.loginRealm,
     clientId: environment.isRunningAsTheme
       ? "security-admin-console"
-      : "security-admin-console-v2",
+      : "security-admin-console",
   });
 
   await keycloak.init({ onLoad: "check-sso", pkceMethod: "S256" });
