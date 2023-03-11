@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/MorganaToken/morgana-core/main/themes/src/main/resources/theme/guinsoolab/welcome/resources/logo.png" width="100" alt="logo" />
+  <img src="https://raw.githubusercontent.com/MorganaToken/morgana-ui/main/apps/admin-ui/public/logo.svg" width="100" alt="logo" />
   <br/>
   <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=14&pause=1000&color=FA9933&center=true&width=700&lines=An+Open+Source+IAM+solution+for+modern+Applications+and+Services" alt="Typing SVG" /></a>
 </div>
@@ -8,7 +8,7 @@
 
 This repository contains the UIs and related libraries of the morgana project.
 
-![morgana-flow](https://raw.githubusercontent.com/MorganaToken/morgana-core/main/themes/src/main/resources/theme/guinsoolab/welcome/resources/morgana-flow.png)
+![morgana-flow](https://raw.githubusercontent.com/MorganaToken/morgana-ui/main/apps/admin-ui/public/morgana-flow.png)
 
 ## Repository structure
 
